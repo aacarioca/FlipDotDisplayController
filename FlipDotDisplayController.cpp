@@ -1,5 +1,5 @@
 /*
-  DisplayController.h - Library for Controlling Max Luminator FlipDot display sign.
+  DisplayController.cpp - Library for Controlling Max Luminator FlipDot display sign.
   Created by Antonio Carioca, July 4, 2012.
 */
 
@@ -66,6 +66,27 @@ byte DotDisplay::generateColumnCode (byte col){
   return result;
 }
 
+/*
+  
+  Parameters:
+  
+  col: takes a byte from 0 to 74, representing the absolute column to 
+  be accessed.
+  row: takes a byte from 0 to 6, representing the absolute row to be acessed
+  on: a boolean, saying whether to turn the dot on or not
+  
+  Returns two bytes to the panel (the first have being calculated by generateColumnCode())
+  as such:
+  
+  |AAA BB CC _|DDD EE _ _ _|
+  
+  AAA - which subcolumn (0-7)
+  BB - which multiplexer (0-3)
+  CC - which subpanel (1-3)
+  DDD - which absolute row (0-6)
+  EE - whether the dot is on or off (1-2)
+  
+*/
 void DotDisplay::setDot(byte col, byte row, bool on){
 	  byte dotFlag = on?1:2;
 	  byte secondbyte = (dotFlag << 3) | (row << 5);
@@ -78,7 +99,6 @@ void DotDisplay::setDot(byte col, byte row, bool on){
 	  delay(3);
 }
 
-//void DotDisplay::updateDisplay(char *textMessage){
 void DotDisplay::updateDisplay(char textMessage[]){
 
 
